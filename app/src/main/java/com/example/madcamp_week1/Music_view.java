@@ -31,4 +31,5 @@ public class Music_view extends Fragment {
         View view = inflater.inflate(R.layout.activity_music_view, container, false);
         return view;
     }
+    
 }
