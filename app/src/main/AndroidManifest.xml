@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Picture_detail"></activity>
+        <activity android:name=".Music_view"></activity>
+        <activity android:name=".Contact_view" />
+        <activity android:name=".Gallery_view" />
+        <activity android:name=".Picture_detail" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
