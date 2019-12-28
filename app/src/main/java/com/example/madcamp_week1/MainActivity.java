@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity{
 
         public MypagerAdapter(FragmentManager supportFragmentManager) {
             super(supportFragmentManager);
-
         }
 
         public void addFragment(Fragment fragment, String title){
