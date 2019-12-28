@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity{
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(pager);
 
-
     }
     public void setupViewPager(ViewPager viewPager) {
         adapter.addFragment(Contact_view.newInstance(), "Contact");
