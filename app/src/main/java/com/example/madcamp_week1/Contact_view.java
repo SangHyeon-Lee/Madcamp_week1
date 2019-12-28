@@ -3,6 +3,8 @@ package com.example.madcamp_week1;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.graphics.Movie;
 import android.os.Bundle;
@@ -98,11 +100,18 @@ public class Contact_view extends Fragment {
             e.printStackTrace();
         }
     }
+    public void InitializeData()
+    {
+        jsonParsing(getJsonString());
+    }
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        InitializeData();
+
+
     }
 
     @Nullable
@@ -114,6 +123,10 @@ public class Contact_view extends Fragment {
     ) {
 
         View view = inflater.inflate(R.layout.activity_contact_view, container, false);
+        RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.recycler_layout);
+        LinearLayoutManager manager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL,false);
+        recyclerView.setLayoutManager(manager); // LayoutManager 등록
+        recyclerView.setAdapter(new ReCyclerViewAdapter(contactList));  // Adapter 등록
         return view;
     }
 }
