@@ -1,14 +1,10 @@
 package com.example.madcamp_week1;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +35,7 @@ public class Music_view extends Fragment implements View.OnClickListener {
     ) {
         View view = inflater.inflate(R.layout.activity_music_view, container, false);
         btnStart = view.findViewById(R.id.btn_music_start);
-        btnStop = view.findViewById(R.id.btn_music_stop);
+        btnStop = view.findViewById(R.id.btn_music_pause);
         btnStart.setOnClickListener(this);
         btnStop.setOnClickListener(this);
         return view;
@@ -52,8 +48,8 @@ public class Music_view extends Fragment implements View.OnClickListener {
                 mediaPlayer = MediaPlayer.create(this.getContext(), R.raw.high);
                 mediaPlayer.start();
                 break;
-            case R.id.btn_music_stop:
-                mediaPlayer.stop();
+            case R.id.btn_music_pause:
+                mediaPlayer.pause();
                 mediaPlayer.reset();
                 break;
         }

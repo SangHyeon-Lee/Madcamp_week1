@@ -117,7 +117,11 @@ public class Contact_view extends Fragment {
     ) {
         View view = inflater.inflate(R.layout.activity_contact_view, container, false);
         RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.recycler_layout);
-        LinearLayoutManager manager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL,false);
+        LinearLayoutManager manager = new LinearLayoutManager(
+                view.getContext(),
+                LinearLayoutManager.VERTICAL,
+                false
+        );
         recyclerView.setLayoutManager(manager); // LayoutManager 등록
         recyclerView.setAdapter(new ReCyclerViewAdapter(contactList));  // Adapter 등록
         return view;
