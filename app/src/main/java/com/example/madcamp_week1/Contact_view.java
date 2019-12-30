@@ -50,14 +50,12 @@ public class Contact_view extends Fragment {
 
     }
 
-
     public static Contact_view newInstance() {
         Contact_view fragmentFirst = new Contact_view();
         return fragmentFirst;
     }
 
-    public String getJsonString()
-    {
+    public String getJsonString() {
         String json = "";
 
         try {
@@ -78,8 +76,7 @@ public class Contact_view extends Fragment {
         return json;
     }
 
-    public void jsonParsing(String json)
-    {
+    public void jsonParsing(String json) {
         try{
             JSONObject jsonObject = new JSONObject(json);
 
@@ -100,18 +97,15 @@ public class Contact_view extends Fragment {
             e.printStackTrace();
         }
     }
-    public void InitializeData()
-    {
+
+    public void InitializeData() {
         jsonParsing(getJsonString());
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         InitializeData();
-
-
     }
 
     @Nullable
@@ -121,7 +115,6 @@ public class Contact_view extends Fragment {
             @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState
     ) {
-
         View view = inflater.inflate(R.layout.activity_contact_view, container, false);
         RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.recycler_layout);
         LinearLayoutManager manager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL,false);
