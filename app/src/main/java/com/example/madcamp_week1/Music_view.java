@@ -1,29 +1,33 @@
 package com.example.madcamp_week1;
 
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
+import android.content.ContentResolver;
+import android.content.Intent;
 import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.AdapterView;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Music_view extends Fragment implements View.OnClickListener {
+public class Music_view extends Fragment {
 
-    MediaPlayer mediaPlayer;
-    Button btnStart, btnStop;
     private ArrayList<MusicDTO> music_list;
+    private ListView musicListView;
 
     public static Music_view newInstance() {
         Music_view fragmentFirst = new Music_view();
@@ -40,19 +44,23 @@ public class Music_view extends Fragment implements View.OnClickListener {
     public View onCreateView(
             LayoutInflater inflater,
             @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState
-    ) {
+            @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_music_view, container, false);
-
         getMusicList(view);
-        for (MusicDTO tmp :
-                music_list) {
-            Log.d("[MusicList]", tmp.toString());
-        }
-//        btnStart = view.findViewById(R.id.btn_music_start);
-//        btnStop = view.findViewById(R.id.btn_music_pause);
-//        btnStart.setOnClickListener(this);
-//        btnStop.setOnClickListener(this);
+        musicListView = view.findViewById(R.id.music_listview);
+        musicListView.setAdapter(new MusicListViewAdapter(view, music_list));
+
+        musicListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(view.getContext(), MusicDetailView.class);
+                Bundle bundle = new Bundle();
+                bundle.putParcelableArrayList("playlist", (ArrayList<? extends Parcelable>)music_list);
+                bundle.putSerializable("position", position);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
         return view;
     }
 
@@ -79,44 +87,19 @@ public class Music_view extends Fragment implements View.OnClickListener {
         }
         cursor.close();
     }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-//            case R.id.btn_music_start:
-//                mediaPlayer = MediaPlayer.create(this.getContext(), R.raw.high);
-//                mediaPlayer.start();
-//                break;
-//            case R.id.btn_music_pause:
-//                mediaPlayer.pause();
-//                mediaPlayer.reset();
-//                break;
-        }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (mediaPlayer != null) {
-            mediaPlayer.release();
-            mediaPlayer = null;
-        }
-    }
-
-    private class MusicDTO {
+    public static class MusicDTO implements Parcelable {
         private String id;
         private String albumId;
         private String title;
         private String artist;
 
-        public MusicDTO() {
-        }
+        public MusicDTO(){}
 
-        public MusicDTO(String id, String albumId, String title, String artist) {
-            this.id = id;
-            this.albumId = albumId;
-            this.title = title;
-            this.artist = artist;
+        public MusicDTO(Parcel in){
+            id = in.readString();
+            albumId = in.readString();
+            title = in.readString();
+            artist = in.readString();
         }
 
         public String getId() {
@@ -160,5 +143,31 @@ public class Music_view extends Fragment implements View.OnClickListener {
         public void setArtist(String artist) {
             this.artist = artist;
         }
+
+        public static final Creator<MusicDTO> CREATOR = new Creator<MusicDTO>(){
+            @Override
+            public MusicDTO createFromParcel(Parcel source) {
+                return new MusicDTO(source);
+            }
+
+            @Override
+            public MusicDTO[] newArray(int size) {
+                return new MusicDTO[size];
+            }
+        };
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(id);
+            dest.writeString(albumId);
+            dest.writeString(title);
+            dest.writeString(artist);
+        }
     }
+
 }

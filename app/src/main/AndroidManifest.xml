@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ViewHolder"></activity>
+        <activity android:name=".MusicDetailView"></activity>
+        <activity android:name=".ViewHolder" />
         <activity android:name=".Music_view" />
         <activity android:name=".Contact_view" />
         <activity android:name=".Gallery_view" />
