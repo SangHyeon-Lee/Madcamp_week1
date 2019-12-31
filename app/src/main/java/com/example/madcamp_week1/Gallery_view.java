@@ -3,6 +3,7 @@ package com.example.madcamp_week1;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -11,9 +12,11 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.GridLayout;
 import android.widget.GridView;
@@ -31,6 +34,7 @@ public class Gallery_view extends Fragment {
         Gallery_view fragmentFirst = new Gallery_view();
         return fragmentFirst;
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,15 +63,21 @@ public class Gallery_view extends Fragment {
                 startActivity(intent);
             }
         });
+
         return view;
     }
+
+
+
+
+
 
     private void getGalleryList(View view) {
         gallery_list = new ArrayList<>();
         String[] projection = {
                 MediaStore.Images.Media._ID,
                 MediaStore.Images.Media.DISPLAY_NAME,
-                MediaStore.Images.Media.MIME_TYPE
+                MediaStore.Images.Media.DATE_ADDED
         };
 
         Cursor cursor = view.getContext().getContentResolver().query(
@@ -78,7 +88,7 @@ public class Gallery_view extends Fragment {
             ImageDTO image_dto = new ImageDTO();
             image_dto.setId(cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media._ID)));
             image_dto.setDisplayname(cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DISPLAY_NAME)));
-            image_dto.setType(cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.MIME_TYPE)));
+            image_dto.setDate(cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATE_ADDED)));
             gallery_list.add(image_dto);
         }
         cursor.close();
@@ -87,7 +97,7 @@ public class Gallery_view extends Fragment {
     public static class ImageDTO implements Parcelable {
         private String id;
         private String displayname;
-        private String type;
+        private String date;
 
 
         public ImageDTO(){}
@@ -95,7 +105,7 @@ public class Gallery_view extends Fragment {
         public ImageDTO(Parcel in){
             id = in.readString();
             displayname = in.readString();
-            type = in.readString();
+            date = in.readString();
 
         }
 
@@ -111,12 +121,12 @@ public class Gallery_view extends Fragment {
             return displayname;
         }
 
-        public void setDisplayname(String albumId) {
+        public void setDisplayname(String displayname) {
             this.displayname = displayname;
         }
 
-        public String getType() {
-            return type;
+        public String getDate() {
+            return date;
         }
 
         @Override
@@ -124,12 +134,12 @@ public class Gallery_view extends Fragment {
             return "MusicDto{" +
                     "id='" + id + '\'' +
                     ", displayname='" + displayname + '\'' +
-                    ", type='" + type + '\'' +
+                    ", type='" + date + '\'' +
                     '}';
         }
 
-        public void setType(String title) {
-            this.type = type;
+        public void setDate(String date) {
+            this.date = date;
         }
 
 
@@ -155,7 +165,7 @@ public class Gallery_view extends Fragment {
         public void writeToParcel(Parcel dest, int flags) {
             dest.writeString(id);
             dest.writeString(displayname);
-            dest.writeString(type);
+            dest.writeString(date);
         }
     }
 
