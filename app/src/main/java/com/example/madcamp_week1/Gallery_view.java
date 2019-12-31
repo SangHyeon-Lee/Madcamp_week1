@@ -5,15 +5,27 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridLayout;
+import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 
 public class Gallery_view extends Fragment {
+
+    private ArrayList<ImageDTO> gallery_list;
+    private GridView gallery_view;
 
     public static Gallery_view newInstance() {
         Gallery_view fragmentFirst = new Gallery_view();
@@ -30,38 +42,121 @@ public class Gallery_view extends Fragment {
     public View onCreateView(
             LayoutInflater inflater,
             @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState
-    ) {
-
+            @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_gallery_view, container, false);
+        getGalleryList(view);
+        gallery_view = view.findViewById(R.id.gallery_gridview);
+        gallery_view.setAdapter(new Image_GridView_Adapter(view, gallery_list));
 
-        final int[] imgs = {R.drawable.img1, R.drawable.img2, R.drawable.img3, R.drawable.img4, R.drawable.img5,
-                R.drawable.img6, R.drawable.img7, R.drawable.img8, R.drawable.img9, R.drawable.img10, R.drawable.img11,
-                R.drawable.img12, R.drawable.img13,R.drawable.img14,R.drawable.img15,R.drawable.img16,R.drawable.img17,
-                R.drawable.img18,R.drawable.img19,R.drawable.img20,};
-        int[] imgs_set = {R.id.img_set1, R.id.img_set2, R.id.img_set3, R.id.img_set4, R.id.img_set5, R.id.img_set6,
-                R.id.img_set7, R.id.img_set8, R.id.img_set9, R.id.img_set10, R.id.img_set11, R.id.img_set12,
-                R.id.img_set13, R.id.img_set14, R.id.img_set15, R.id.img_set16, R.id.img_set17, R.id.img_set18,
-                R.id.img_set19, R.id.img_set20};
+        gallery_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(view.getContext(), Picture_detail.class);
+                Bundle bundle = new Bundle();
+                bundle.putParcelableArrayList("imglist", (ArrayList<? extends Parcelable>) gallery_list);
+                bundle.putSerializable("position", position);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+        return view;
+    }
 
-        for (int i=0; i<imgs.length; i++){
+    private void getGalleryList(View view) {
+        gallery_list = new ArrayList<>();
+        String[] projection = {
+                MediaStore.Images.Media._ID,
+                MediaStore.Images.Media.DISPLAY_NAME,
+                MediaStore.Images.Media.MIME_TYPE
+        };
 
-            final ImageButton img_button = (ImageButton) view.findViewById(imgs_set[i]);
-            img_button.setImageResource(imgs[i]);
+        Cursor cursor = view.getContext().getContentResolver().query(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                projection, null, null, null);
 
-            img_button.setTag(imgs[i]);
-            img_button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(getActivity(), Picture_detail.class);
-                    intent.putExtra("img", (int)img_button.getTag());
-                    startActivity(intent);
+        while(cursor.moveToNext()){
+            ImageDTO image_dto = new ImageDTO();
+            image_dto.setId(cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media._ID)));
+            image_dto.setDisplayname(cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DISPLAY_NAME)));
+            image_dto.setType(cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.MIME_TYPE)));
+            gallery_list.add(image_dto);
+        }
+        cursor.close();
+    }
 
-                }
-            });
+    public static class ImageDTO implements Parcelable {
+        private String id;
+        private String displayname;
+        private String type;
+
+
+        public ImageDTO(){}
+
+        public ImageDTO(Parcel in){
+            id = in.readString();
+            displayname = in.readString();
+            type = in.readString();
+
         }
 
-        return view;
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getDisplayname() {
+            return displayname;
+        }
+
+        public void setDisplayname(String albumId) {
+            this.displayname = displayname;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        @Override
+        public String toString() {
+            return "MusicDto{" +
+                    "id='" + id + '\'' +
+                    ", displayname='" + displayname + '\'' +
+                    ", type='" + type + '\'' +
+                    '}';
+        }
+
+        public void setType(String title) {
+            this.type = type;
+        }
+
+
+
+        public static final Creator<ImageDTO> CREATOR = new Creator<ImageDTO>(){
+            @Override
+            public ImageDTO createFromParcel(Parcel source) {
+                return new ImageDTO(source);
+            }
+
+            @Override
+            public ImageDTO[] newArray(int size) {
+                return new ImageDTO[size];
+            }
+        };
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(id);
+            dest.writeString(displayname);
+            dest.writeString(type);
+        }
     }
 
 }

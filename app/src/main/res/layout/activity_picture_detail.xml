@@ -20,13 +20,13 @@
 
     <ImageView
         android:id="@+id/detail_image"
-        android:layout_width="333dp"
-        android:layout_height="331dp"
+        android:layout_width="335dp"
+        android:layout_height="390dp"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
         app:layout_constraintBottom_toTopOf="@+id/back_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@null"
-        app:srcCompat="@mipmap/ic_launcher" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
