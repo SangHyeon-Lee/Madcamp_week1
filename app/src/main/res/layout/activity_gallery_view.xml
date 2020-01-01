@@ -6,21 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".Gallery_view">
 
-    <androidx.gridlayout.widget.GridLayout
-        android:layout_width="409dp"
-        android:layout_height="601dp"
+    <GridView
+        android:id="@+id/gallery_gridview"
+        android:layout_width="360dp"
+        android:layout_height="500dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginTop="1dp"
+        android:maxWidth="120dp"
+        android:maxHeight="120dp"
+        android:numColumns="3"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageButton
-            android:id="@+id/imageButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:src="@mipmap/ic_launcher"
-            app:layout_column="0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_row="0" />
-    </androidx.gridlayout.widget.GridLayout>
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
