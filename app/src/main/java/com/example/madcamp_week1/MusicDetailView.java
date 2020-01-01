@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,18 +21,20 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MusicDetailView extends AppCompatActivity implements View.OnClickListener {
 
     private ArrayList<Music_view.MusicDTO> music_list;
     private MediaPlayer mediaPlayer;
     private TextView title;
-    private ImageView album,previous,play,pause,next;
+    private ImageView album, previous, play, pause, next, shuffle;
     private SeekBar seek_bar;
     boolean isPlaying = true;
     private ContentResolver res;
     private ProgressUpdate progressUpdate;
     private int position;
+    private boolean isShuffle = false;
 
 
     @Override
@@ -51,11 +55,13 @@ public class MusicDetailView extends AppCompatActivity implements View.OnClickLi
         play = (ImageView)findViewById(R.id.play);
         pause = (ImageView)findViewById(R.id.pause);
         next = (ImageView)findViewById(R.id.next);
+        shuffle = findViewById(R.id.shuffle);
 
         previous.setOnClickListener(this);
         play.setOnClickListener(this);
         pause.setOnClickListener(this);
         next.setOnClickListener(this);
+        shuffle.setOnClickListener(this);
 
         playMusic(music_list.get(position));
         progressUpdate = new ProgressUpdate();
@@ -84,12 +90,24 @@ public class MusicDetailView extends AppCompatActivity implements View.OnClickLi
         mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-                if(position+1<music_list.size()) {
-                    position++;
-                    playMusic(music_list.get(position));
-                }
+                play_next_music(1);
             }
         });
+    }
+
+    private void play_next_music(int weight) {
+        if(isShuffle){
+            position = new Random().nextInt(music_list.size());
+            playMusic(music_list.get(position));
+        }
+        else {
+            position += weight;
+            if(position >= 0 && position < music_list.size())
+                playMusic(music_list.get(position));
+            else
+                throw new RuntimeException("Error At play next music");
+        }
+
     }
 
     @Override
@@ -107,19 +125,30 @@ public class MusicDetailView extends AppCompatActivity implements View.OnClickLi
                 mediaPlayer.pause();
                 break;
             case R.id.pre:
-                if(position - 1 >= 0 ){
-                    position--;
-                    playMusic(music_list.get(position));
-                    seek_bar.setProgress(0);
-                }
+                Log.d("[PRE_BUTTON]", "Pressed");
+                play_next_music(-1);
+//                if(position - 1 >= 0 ){
+//                    position--;
+//                    playMusic(music_list.get(position));
+//                    seek_bar.setProgress(0);
+//                }
                 break;
             case R.id.next:
-                if(position+1<music_list.size()){
-                    position++;
-                    playMusic(music_list.get(position));
-                    seek_bar.setProgress(0);
-                }
+                Log.d("[NEXT_BUTTON]", "Pressed");
+                play_next_music(1);
+//                if(position+1<music_list.size()){
+//                    position++;
+//                    playMusic(music_list.get(position));
+//                    seek_bar.setProgress(0);
+//                }
                 break;
+            case R.id.shuffle:
+                if (isShuffle) {
+                    shuffle.setColorFilter(null);
+                } else {
+                    shuffle.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+                }
+                isShuffle = !isShuffle;
         }
     }
 
@@ -159,7 +188,10 @@ public class MusicDetailView extends AppCompatActivity implements View.OnClickLi
     private void playMusic(Music_view.MusicDTO musicDTO) {
         try {
             seek_bar.setProgress(0);
-            title.setText(musicDTO.getArtist()+" - "+musicDTO.getTitle());
+            if(musicDTO.getAlbumId().length() > 7)
+                title.setText(musicDTO.getTitle());
+            else
+                title.setText(musicDTO.getArtist()+" - "+musicDTO.getTitle());
             Uri musicURI = Uri.withAppendedPath(
                     MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, ""+musicDTO.getId());
             mediaPlayer.reset();

@@ -37,13 +37,21 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <SeekBar
                 android:id="@+id/seek_bar"
-                android:layout_width="350dp"
+                android:layout_width="0dp"
+                android:layout_weight="8"
                 android:layout_height="wrap_content"/>
 
+            <ImageView
+                android:id="@+id/shuffle"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="match_parent"
+                android:src="@drawable/shuffle" />
         </LinearLayout>
 
 
