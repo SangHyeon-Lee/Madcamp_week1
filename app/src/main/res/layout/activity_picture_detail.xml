@@ -7,10 +7,26 @@
     tools:context=".Picture_detail">
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/back_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
-        tools:layout_editor_absoluteX="74dp"
-        tools:layout_editor_absoluteY="219dp" />
+        android:text="Go Back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.849" />
+
+    <ImageView
+        android:id="@+id/detail_image"
+        android:layout_width="333dp"
+        android:layout_height="331dp"
+        app:layout_constraintBottom_toTopOf="@+id/back_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@null"
+        app:srcCompat="@mipmap/ic_launcher" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
