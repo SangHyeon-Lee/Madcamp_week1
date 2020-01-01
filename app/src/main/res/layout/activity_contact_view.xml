@@ -10,7 +10,8 @@
         android:id="@+id/recycler_layout"
 
         android:layout_width="393dp"
-        android:layout_height="545dp"
+        android:layout_height="500dp"
+        android:layout_marginBottom="45dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

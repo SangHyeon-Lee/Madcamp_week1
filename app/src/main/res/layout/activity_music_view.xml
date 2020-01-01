@@ -7,28 +7,29 @@
     tools:context=".Music_view">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_width="360dp"
+        android:layout_height="512dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ListView
             android:id="@+id/music_listview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
-<!--        <Button-->
-<!--            android:id="@+id/btn_music_start"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Music Start"-->
-<!--            />-->
+            android:layout_height="match_parent" />
+        <!--        <Button-->
+        <!--            android:id="@+id/btn_music_start"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="Music Start"-->
+        <!--            />-->
 
-<!--        <Button-->
-<!--            android:id="@+id/btn_music_pause"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Music Stop"-->
-<!--            />-->
+        <!--        <Button-->
+        <!--            android:id="@+id/btn_music_pause"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="Music Stop"-->
+        <!--            />-->
 
     </LinearLayout>
 
