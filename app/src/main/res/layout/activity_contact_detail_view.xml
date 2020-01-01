@@ -3,86 +3,77 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="#39000000"
-    android:paddingBottom="5dp"
-    tools:context=".ViewHolder">
+    android:layout_height="match_parent"
+    tools:context=".ContactDetailView">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="360dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-
-        app:cardBackgroundColor="#FFFFFF"
-        app:cardCornerRadius="5dp"
-        app:cardElevation="10dp"
-        app:cardMaxElevation="15dp"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/default_gap"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <RelativeLayout
-            android:id="@+id/relative"
-            android:layout_width="match_parent"
-            android:layout_height="80dp">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/sample_contact_img"
-                android:layout_width="63dp"
-                android:layout_height="67dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
-
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="7dp"
-                android:layout_marginEnd="287dp"
-                android:layout_marginRight="287dp"
-                android:layout_marginBottom="8dp"
-                android:contentDescription="@null"
-                android:src="@drawable/round_default_image"
-                app:srcCompat="@mipmap/ic_launcher" />
-
-            <TextView
-                android:id="@+id/contact_name"
-                android:layout_width="269dp"
-                android:layout_height="25dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-
-
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="91dp"
-                android:layout_marginLeft="91dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="40dp"
-                android:text="TextView" />
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/round_default_image" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/contact_detail_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/default_gap"
+                    android:text="이름 : "/>
+                <TextView
+                    android:id="@+id/contact_detail_phone_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/default_gap"
+                    android:text="전화번호 : "/>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="15dp">
 
             <TextView
-                android:id="@+id/contact_phone_number"
-                android:layout_width="329dp"
-                android:layout_height="40dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
+                android:id="@+id/contact_detail_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_gap"
+                android:text="주소 : "/>
+            <TextView
+                android:id="@+id/contact_detail_company"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_gap"
+                android:text="회사 : "/>
+            <TextView
+                android:id="@+id/contact_detail_job"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_gap"
+                android:text="직업 : "/>
+        </LinearLayout>
 
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="90dp"
-                android:layout_marginLeft="90dp"
-                android:layout_marginTop="40dp"
-                android:text="TextView" />
-
-        </RelativeLayout>
-    </androidx.cardview.widget.CardView>
-
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
