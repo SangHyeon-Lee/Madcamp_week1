@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.graphics.Movie;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,33 +23,55 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Contact_view extends Fragment {
 
     ArrayList<Contact> contactList = new ArrayList<>();
 
-    public class Contact{
-        private String name;
-        private String phone_number;
+    public static class Contact implements Parcelable {
+        public String name;
+        public String phone_number;
+        public String address;
+        public String company;
+        public String job;
 
-        public String getName() {
-            return name;
+        public Contact(){}
+
+        protected Contact(Parcel in) {
+            name = in.readString();
+            phone_number = in.readString();
+            address = in.readString();
+            company = in.readString();
+            job = in.readString();
         }
 
-        public String getPhone_number() {
-            return phone_number;
+        public static final Creator<Contact> CREATOR = new Creator<Contact>() {
+            @Override
+            public Contact createFromParcel(Parcel in) {
+                return new Contact(in);
+            }
+
+            @Override
+            public Contact[] newArray(int size) {
+                return new Contact[size];
+            }
+        };
+
+        @Override
+        public int describeContents() {
+            return 0;
         }
 
-
-        public void setName(String name) {
-            this.name = name;
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(name);
+            dest.writeString(phone_number);
+            dest.writeString(address);
+            dest.writeString(company);
+            dest.writeString(job);
         }
-
-        public void setPhone_number(String phone_number) {
-            this.phone_number = phone_number;
-        }
-
     }
 
     public static Contact_view newInstance() {
@@ -80,17 +104,19 @@ public class Contact_view extends Fragment {
         try{
             JSONObject jsonObject = new JSONObject(json);
 
-            JSONArray movieArray = jsonObject.getJSONArray("Contact");
+            JSONArray contactArray = jsonObject.getJSONArray("Contact");
 
-            for(int i=0; i<movieArray.length(); i++)
+            for(int i=0; i<contactArray.length(); i++)
             {
-                JSONObject contactObject = movieArray.getJSONObject(i);
+                JSONObject contactObject = contactArray.getJSONObject(i);
 
                 Contact contact = new Contact();
 
-                contact.setName(contactObject.getString("name"));
-                contact.setPhone_number(contactObject.getString("phone_number"));
-
+                contact.name = contactObject.getString("name");
+                contact.phone_number = contactObject.getString("phone_number");
+                contact.address = contactObject.getString("address");
+                contact.company = contactObject.getString("company");
+                contact.job = contactObject.getString("job");
                 contactList.add(contact);
             }
         }catch (JSONException e) {

@@ -104,6 +104,10 @@ public class MusicDetailView extends AppCompatActivity implements View.OnClickLi
             position += weight;
             if(position >= 0 && position < music_list.size())
                 playMusic(music_list.get(position));
+            else if(position == music_list.size() || position == -1){
+                position = 0;
+                play_next_music(0);
+            }
             else
                 throw new RuntimeException("Error At play next music");
         }

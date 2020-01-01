@@ -2,6 +2,8 @@ package com.example.madcamp_week1;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +34,9 @@ public class ReCyclerViewAdapter extends RecyclerView.Adapter<ReCyclerViewAdapte
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(itemView.getContext(), ContactDetailView.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("data", myDataList.get(getAdapterPosition()));
+                    intent.putExtras(bundle);
                     itemView.getContext().startActivity(intent);
                 }
             });
@@ -54,9 +59,8 @@ public class ReCyclerViewAdapter extends RecyclerView.Adapter<ReCyclerViewAdapte
     public void onBindViewHolder(@NonNull MyViewHolder viewHolder, int position)
     {
         //ViewHolder가 관리하는 View에 position에 해당하는 데이터 바인딩
-        viewHolder.name.setText(myDataList.get(position).getName());
-        viewHolder.phone_number.setText(myDataList.get(position).getPhone_number());
-
+        viewHolder.name.setText(myDataList.get(position).name);
+        viewHolder.phone_number.setText(myDataList.get(position).phone_number);
     }
 
     @Override

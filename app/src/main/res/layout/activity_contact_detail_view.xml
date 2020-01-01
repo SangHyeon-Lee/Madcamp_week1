@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="@android:dimen/app_icon_size"
+            android:padding="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -33,14 +33,16 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@android:dimen/notification_large_icon_width"
+                android:paddingLeft="10dp"
                 android:orientation="vertical">
                 <TextView
+                    android:id="@+id/contact_detail_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/default_gap"
                     android:text="이름 : "/>
                 <TextView
+                    android:id="@+id/contact_detail_phone_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/default_gap"
@@ -51,18 +53,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingLeft="@android:dimen/app_icon_size">
+            android:paddingLeft="15dp">
+
             <TextView
+                android:id="@+id/contact_detail_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/default_gap"
-                android:text="집 주소 : "/>
+                android:text="주소 : "/>
             <TextView
+                android:id="@+id/contact_detail_company"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/default_gap"
                 android:text="회사 : "/>
             <TextView
+                android:id="@+id/contact_detail_job"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/default_gap"
