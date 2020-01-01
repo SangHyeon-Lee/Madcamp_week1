@@ -68,16 +68,13 @@ public class Gallery_view extends Fragment {
     }
 
 
-
-
-
-
     private void getGalleryList(View view) {
         gallery_list = new ArrayList<>();
         String[] projection = {
                 MediaStore.Images.Media._ID,
                 MediaStore.Images.Media.DISPLAY_NAME,
-                MediaStore.Images.Media.DATE_ADDED
+                MediaStore.Images.Media.DATE_ADDED,
+                MediaStore.Images.Media.SIZE
         };
 
         Cursor cursor = view.getContext().getContentResolver().query(
@@ -89,6 +86,7 @@ public class Gallery_view extends Fragment {
             image_dto.setId(cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media._ID)));
             image_dto.setDisplayname(cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DISPLAY_NAME)));
             image_dto.setDate(cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATE_ADDED)));
+            image_dto.setSize(cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.SIZE)));
             gallery_list.add(image_dto);
         }
         cursor.close();
@@ -98,6 +96,7 @@ public class Gallery_view extends Fragment {
         private String id;
         private String displayname;
         private String date;
+        private String size;
 
 
         public ImageDTO(){}
@@ -106,6 +105,7 @@ public class Gallery_view extends Fragment {
             id = in.readString();
             displayname = in.readString();
             date = in.readString();
+            size = in.readString();
 
         }
 
@@ -134,7 +134,8 @@ public class Gallery_view extends Fragment {
             return "MusicDto{" +
                     "id='" + id + '\'' +
                     ", displayname='" + displayname + '\'' +
-                    ", type='" + date + '\'' +
+                    ", date='" + date + '\'' +
+                    ", size='" + size + '\'' +
                     '}';
         }
 
@@ -142,7 +143,9 @@ public class Gallery_view extends Fragment {
             this.date = date;
         }
 
+        public String getSize() {return size;}
 
+        public void setSize(String size) {this.size = size;}
 
         public static final Creator<ImageDTO> CREATOR = new Creator<ImageDTO>(){
             @Override
@@ -166,6 +169,7 @@ public class Gallery_view extends Fragment {
             dest.writeString(id);
             dest.writeString(displayname);
             dest.writeString(date);
+            dest.writeString(size);
         }
     }
 
